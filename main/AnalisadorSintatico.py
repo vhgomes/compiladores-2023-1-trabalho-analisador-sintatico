@@ -98,7 +98,8 @@ class Parser:
         self.comparacao()
             
     def comparacao(self):
-        if self.verificar_token(Token.OPERADORES, [">=", "<=","<",">"])
+        if self.verificar_token(Token.OPERADORES, [">=", "<=","<",">"]):
+            pass
         
     def termo(self):
         self.factor()
@@ -112,6 +113,84 @@ class Parser:
     
     def unary(self):
         if self.verificar_token(Token.OPERADORES, ["!", "-"]):
+            pass
+        self.call()
 
-    def keyword(self):
-        pass
+    def call(self):
+        self.primary()
+        while self.verificar_token(Token.DELIMITADOR, '(') or self.verificar_token(Token.DELIMITADOR, '.'):
+            if self.verificar_token(Token.DELIMITADOR, '('):
+                pass
+            self.arguments()
+            if self.verificar_token(Token.DELIMITADOR, ')'):
+                pass
+            if self.verificar_token(Token.DELIMITADOR, '.'):
+                pass
+            if self.verificar_token(Token.IDENTIFICADOR, None):
+                pass      
+        return
+
+    def arguments(self):
+        self.expression()
+        while self.verificar_token(Token.DELIMITADOR, ','):
+            self.expression()
+
+    def primary(self):
+        if self.verificar_token(Token.KEYWORD, None):
+            pass
+
+    def statement(self):
+        if self.verificar_token(Token.KEYWORD, 'print'):
+            pass
+        if self.verificar_token(Token.KEYWORD, 'if'):
+            pass
+        if self.verificar_token(Token.KEYWORD, 'for'):
+            pass
+        if self.verificar_token(Token.KEYWORD, 'return'):
+            pass
+        if self.verificar_token(Token.KEYWORD, 'while'):
+            pass
+        if self.verificar_token(Token.KEYWORD, 'block'):
+            pass
+
+    def printfunc(self):
+        self.expression()
+        if self.verificar_token(Token.DELIMITADOR, ';'):
+            pass
+
+    def iffunc(self):
+        if self.verificar_token(Token.DELIMITADOR, '('):
+            self.expression()
+            if self.verificar_token(Token.DELIMITADOR, ')'):
+                pass
+            if self.verificar_token(Token.KEYWORD, 'else'):
+                self.statement()
+    
+    def forfunc(self):
+        if self.verificar_token(Token.DELIMITADOR, '('):
+            self.expression()
+            if self.verificar_token(Token.DELIMITADOR, ';'):
+                self.expression()
+                if self.verificar_token(Token.DELIMITADOR, ';'):
+                    self.expression()
+                    if self.verificar_token(Token.DELIMITADOR, ')'):
+                        self.statement()
+
+    def returnfunc(self):
+        if self.verificar_token(Token.KEYWORD, 'return'):
+            self.expression()
+            if self.verificar_token(Token.DELIMITADOR, ';'):
+                pass
+
+    def whilefunc(self):
+        if self.verificar_token(Token.KEYWORD, 'while'):
+            if self.verificar_token(Token.DELIMITADOR, '('):
+                self.expression()
+                if self.verificar_token(Token.DELIMITADOR, ')'):
+                    self.statement()
+
+    def blockfunc(self):
+        if self.verificar_token(Token.DELIMITADOR, '{'):
+            self.declaracao()
+            if self.verificar_token(Token.DELIMITADOR, '}'):
+                pass
