@@ -7,7 +7,5 @@ with open('test/teste3.c', 'r') as file:
     input = re.sub('//.*', ' ', input)  
     input = re.sub('(/\*(.|\n)*?\*/)', ' ', input)  
     tokens = tokenizar_codigo_fonte(input)
-    print(tokens)
-
     parser = Parser(tokens)
     parser.parse()

@@ -7,12 +7,13 @@ class Parser:
         self.index = -1
         self.avancar()
 
-    def verificar_token(self, classe, valor_esperado = None):
-        print(f'Qual index estamos? {self.index}{self.current_token}')
+    def verificar_token(self, classe, valor_esperado):
+        print(f'Qual index estamos? {self.index}{self.current_token}{valor_esperado}')
         tokenzinho = self.tokens[self.index]
         print(f'{tokenzinho[0], tokenzinho[1]}')
-        if tokenzinho[0] == classe and tokenzinho[1] == valor_esperado:
+        if tokenzinho[0] == classe and (valor_esperado is None or tokenzinho[1] == valor_esperado):
             print('Entrou na verificação')
+            self.avancar()
             return True
         print('Retornando falso?')
         return False
@@ -36,21 +37,26 @@ class Parser:
         print(f'Entrou em declaração com o Token {self.current_token}')
         if self.verificar_token(Token.DECLARATION, "fun"):
             self.declaracaoFuncao()
+            return
         if self.current_token[1] == 'var':
             self.declaracaoVar()
         else:
             self.keyword()
 
     def declaracaoFuncao(self):
-        self.avancar()
-        if self.verificar_token(Token.IDENTIFICADOR):
-            print("Passou por ser um identificador")
+        if self.verificar_token(Token.IDENTIFICADOR, None):
             if self.verificar_token(Token.DELIMITADOR, '('):
-                print('Entrou em delimitador de abertura')
-                self.avancar()
-                print("Passou por ser a abertura de um delimitador de função")
-                if self.verificar_token(Token.DELIMITADOR, ')'):
-                    print('fechou a função')
+                if self.verificar_token(Token.IDENTIFICADOR, None):
+                    self.declaracaoParam()
+                    if self.verificar_token(Token.DELIMITADOR, ')'):
+                        print('Teoricamente é pra estar aqui')
+
+
+    def declaracaoParam(self):
+        if self.verificar_token(Token.IDENTIFICADOR, None):
+            if self.verificar_token(Token.DELIMITADOR, ','):
+                print('Delimitador')
+                if self.verificar_token(Token.IDENTIFICADOR):
                     pass
                     
     def declaracaoVar(self):
