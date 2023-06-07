@@ -26,6 +26,10 @@ def tokenizar_codigo_fonte(codigo_fonte):
             if match_keyword:
                 tokens.append(('Keyword', match_keyword.group()))
                 posicao = match_keyword.end()
+            match_operador_logico = Token.OPERADORES_LOGICOS.value.match(codigo_fonte, posicao)
+            if match_operador_logico:
+                tokens.append((Token.OPERADORES_LOGICOS.match_keyword.group()))
+                posicao = match_operador_logico.end()
             else:
                 tokens.append((Token.IDENTIFICADOR, identificador))
                 posicao += len(identificador)

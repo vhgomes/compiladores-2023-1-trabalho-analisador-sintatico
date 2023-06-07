@@ -82,12 +82,36 @@ class Parser:
 
     def logica_or(self):
         self.logica_and()
-        if self.verificar_token(Token.OPERADORES, "or"):
+        if self.verificar_token(Token.OPERADORES_LOGICOS, "or"):
+            self.logica_and()
 
     def logica_and(self):
         self.equalidade()
+        if self.verificar_token(Token.OPERADORES_LOGICOS, "and"):
+            self.equalidade()
 
     def equalidade(self):
+        if self.verificar_token(Token.OPERADOR, "!="):
+            pass
+        if self.verificar_token(Token.OPERADOR, "=="):
+            pass
+        self.comparacao()
+            
+    def comparacao(self):
+        if self.verificar_token(Token.OPERADORES, [">=", "<=","<",">"])
+        
+    def termo(self):
+        self.factor()
+        if self.verificar_token(Token.OPERADORES, ["-", "+"]):
+            pass
+        self.factor()  
+
+    def factor(self):
+        if self.verificar_token(Token.OPERADORES, ["*", "/"]):
+            pass
+    
+    def unary(self):
+        if self.verificar_token(Token.OPERADORES, ["!", "-"]):
 
     def keyword(self):
         pass
