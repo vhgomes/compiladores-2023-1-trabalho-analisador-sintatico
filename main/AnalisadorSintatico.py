@@ -8,7 +8,7 @@ class Parser:
         self.avancar()
 
     def verificar_token(self, classe, valor_esperado):
-        print(f'Qual index estamos recebendo? Index == {self.index} valoratual = {self.tokens[index]}  Token Atual =={classe}  Valor Esperado == {valor_esperado}')
+        print(f'Qual index estamos recebendo? Index == {self.index} valoratual = {self.tokens[self.index]}  Token Atual =={classe}  Valor Esperado == {valor_esperado}')
         tokenzinho = self.tokens[self.index]
         print(f'{tokenzinho[0], tokenzinho[1]}')
         if tokenzinho[0] == classe and (tokenzinho[1] == valor_esperado or valor_esperado is None):
@@ -41,7 +41,7 @@ class Parser:
         if self.current_token[1] == 'var':
             self.declaracaoVar()
         else:
-            self.keyword()
+            self.statement()
 
     def declaracaoFuncao(self):
         if self.verificar_token(Token.IDENTIFICADOR, None):

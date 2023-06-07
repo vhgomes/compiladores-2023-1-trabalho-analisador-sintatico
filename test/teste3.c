@@ -1,1 +1,5 @@
-fun nomedefuncao(alo, tudo)
+fun printSum(a, b) {
+  print a + b;
+}
+
+printSum(10, 15);

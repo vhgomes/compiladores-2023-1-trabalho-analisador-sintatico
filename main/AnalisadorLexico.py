@@ -24,7 +24,7 @@ def tokenizar_codigo_fonte(codigo_fonte):
             identificador = match_identificador.group()
             match_keyword = Token.KEYWORD.value.match(codigo_fonte, posicao)
             if match_keyword:
-                tokens.append(('Keyword', match_keyword.group()))
+                tokens.append((Token.KEYWORD, match_keyword.group()))
                 posicao = match_keyword.end()
             match_operador_logico = Token.OPERADORES_LOGICOS.value.match(codigo_fonte, posicao)
             if match_operador_logico:
@@ -37,7 +37,7 @@ def tokenizar_codigo_fonte(codigo_fonte):
 
         match_textual = Token.TEXTUAL.value.match(codigo_fonte, posicao)
         if match_textual:
-            tokens.append(('Textual', match_textual.group()))
+            tokens.append((Token.TEXTUAL, match_textual.group()))
             posicao += len(match_textual.group())
             continue
 
@@ -49,19 +49,19 @@ def tokenizar_codigo_fonte(codigo_fonte):
         
         match_operadores = Token.OPERADORES.value.match(codigo_fonte, posicao)
         if match_operadores:
-            tokens.append(('Operadores', match_operadores.group()))
+            tokens.append((Token.OPERADORES, match_operadores.group()))
             posicao += len(match_operadores.group())
             continue
 
         match_ponto_flutuante = Token.PONTO_FLUTUANTE.value.match(codigo_fonte, posicao)
         if match_ponto_flutuante:
-            tokens.append(('Ponto Flutuante', match_ponto_flutuante.group()))
+            tokens.append((Token.PONTO_FLUTUANTE, match_ponto_flutuante.group()))
             posicao += len(match_ponto_flutuante.group())
             continue
 
         match_inteiros = Token.INTEIROS.value.match(codigo_fonte, posicao)
         if match_inteiros:
-            tokens.append(('Inteiro', match_inteiros.group()))
+            tokens.append((Token.INTEIROS, match_inteiros.group()))
             posicao += len(match_inteiros.group())
             continue
 
