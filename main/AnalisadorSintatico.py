@@ -8,11 +8,11 @@ class Parser:
         self.avancar()
 
     def verificar_token(self, classe, valor_esperado):
-        print(f'Qual index estamos? {self.index}{self.current_token}{valor_esperado}')
+        print(f'Qual index estamos recebendo? Index == {self.index} valoratual = {self.tokens[index]}  Token Atual =={classe}  Valor Esperado == {valor_esperado}')
         tokenzinho = self.tokens[self.index]
         print(f'{tokenzinho[0], tokenzinho[1]}')
-        if tokenzinho[0] == classe and (valor_esperado is None or tokenzinho[1] == valor_esperado):
-            print('Entrou na verificação')
+        if tokenzinho[0] == classe and (tokenzinho[1] == valor_esperado or valor_esperado is None):
+            print('Passou na verificação, foi para o proximo token')
             self.avancar()
             return True
         print('Retornando falso?')
@@ -49,18 +49,45 @@ class Parser:
                 if self.verificar_token(Token.IDENTIFICADOR, None):
                     self.declaracaoParam()
                     if self.verificar_token(Token.DELIMITADOR, ')'):
-                        print('Teoricamente é pra estar aqui')
+                        self.declaracaoBlock()
 
 
     def declaracaoParam(self):
-        if self.verificar_token(Token.IDENTIFICADOR, None):
-            if self.verificar_token(Token.DELIMITADOR, ','):
-                print('Delimitador')
-                if self.verificar_token(Token.IDENTIFICADOR):
-                    pass
+        print("Entrou na declaram de PARAM")
+        while self.verificar_token(Token.DELIMITADOR, None):
+            if self.verificar_token(Token.IDENTIFICADOR, None):
+                pass
+        return
+    
+    def declaracaoBlock(self):
+        if self.verificar_token(Token.DELIMITADOR, '{'):
+            while not self.verificar_token(Token.DELIMITADOR, '}') and self.current_token == None:
+                self.declaracao()
+
                     
     def declaracaoVar(self):
+        if self.verificar_token(Token.IDENTIFICADOR, None):
+            if self.verificar_token(Token.OPERADORES, '='):
+                self.expression()
         pass
+
+    def expression(self):
+        self.assigment()
+
+
+    def assigment(self):
+        if self.verificar_token(Token.IDENTIFICADOR, None):
+            pass
+        self.logica_or()
+
+    def logica_or(self):
+        self.logica_and()
+        if self.verificar_token(Token.OPERADORES, "or"):
+
+    def logica_and(self):
+        self.equalidade()
+
+    def equalidade(self):
 
     def keyword(self):
         pass
